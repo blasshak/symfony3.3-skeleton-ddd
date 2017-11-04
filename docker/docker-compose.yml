@@ -1,0 +1,57 @@
+version: '2'
+
+services:
+    application:
+        image: tianon/true
+        hostname: application
+        volumes:
+          - ./../:/var/www/myidsafeguardapi
+          - ./logs/symfony:/var/www/myidsafeguardapi/var/logs
+    db:
+        image: mysql
+        hostname: db
+        volumes:
+            - "./.data/db:/var/lib/mysql"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: symfony
+            MYSQL_USER: symfony
+            MYSQL_PASSWORD: symfony
+        ports:
+          - "3306:3306"
+        networks:
+          myidsafeguardapi:
+              ipv4_address: 192.168.100.2
+    php:
+        build: ./php7-fpm
+        hostname: phpfpm
+        ports:
+            - 9000:9000
+        networks:
+          myidsafeguardapi:
+              ipv4_address: 192.168.100.3
+        volumes_from:
+          - application
+        links:
+          - db
+    nginx:
+        build: ./nginx
+        hostname: nginx
+        ports:
+            - 9090:80
+        networks:
+          myidsafeguardapi:
+              ipv4_address: 192.168.100.4
+        links:
+          - php
+        volumes_from:
+            - php
+        volumes:
+            - ./logs/nginx/:/var/log/nginx
+networks:
+    myidsafeguardapi:
+        ipam:
+            driver: default
+            config:
+                - subnet:  192.168.100.0/24
+                  gateway: 192.168.100.1

@@ -1,0 +1,4 @@
+demo:
+    path:     /demo
+    defaults: { _controller: 'MyIdSafeGuardBundle:Demo:show' }
+    methods:  [GET]
