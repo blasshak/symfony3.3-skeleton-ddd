@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Symfony;
 
+use App\Infrastructure\Symfony\DependencyInjection\Compiler\EventBusPass;
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -15,6 +16,7 @@ class MyIdSafeGuardBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
+        $container->addCompilerPass(new EventBusPass());
         $container->addCompilerPass($this->buildMappingCompilerPass());
     }
 

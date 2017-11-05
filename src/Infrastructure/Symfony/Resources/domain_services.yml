@@ -1,1 +1,5 @@
 services:
+    send_email_listener:
+        class: App\Domain\Bus\Event\Prueba\SendEmailListener
+        tags:
+            - { name: infrastructure.event_bus_sync, event_class_name: 'UserResgisteredEvent' }

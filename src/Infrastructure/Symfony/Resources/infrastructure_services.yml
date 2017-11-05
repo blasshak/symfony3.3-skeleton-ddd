@@ -1,0 +1,3 @@
+services:
+    infrastructure.event_bus_sync:
+        class: App\Infrastructure\Bus\Event\EventBusSync

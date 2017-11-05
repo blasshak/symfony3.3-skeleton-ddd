@@ -16,6 +16,8 @@ class DemoController extends Controller
      */
     public function showAction()
     {
+        $eventBus = $this->get('infrastructure.event_bus_sync');
+        var_dump($eventBus);
         var_dump("ss");
         exit();
     }
