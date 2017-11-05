@@ -1,3 +1,30 @@
 services:
-    infrastructure.event_bus_sync:
-        class: App\Infrastructure\Bus\Event\EventBusSync
+    infrastructure.use_case_bus_sync:
+        class: App\Infrastructure\Bus\UseCase\UseCaseBusSync
+        arguments:
+          - ["@infrastructure.dispatches_events", "@infrastructure.doctrine_translation", "@infrastructure.use_case_hendler"]
+
+    infrastructure.use_case_hendler:
+        class: App\Infrastructure\Bus\UseCase\Middleware\UseCaseHandler
+        arguments: ["@infrastructure.symfony_container", "@infrastructure.inflector_use_case_handler_name"]
+
+    infrastructure.dispatches_events:
+        class: App\Infrastructure\Bus\UseCase\Middleware\DispatchesEvents
+        arguments: ["@infrastructure.event_bus", "@infrastructure.event_provider"]
+
+    infrastructure.doctrine_translation:
+        class: App\Infrastructure\Bus\UseCase\Middleware\DoctrineTransaction
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    infrastructure.event_bus:
+        class: App\Infrastructure\Bus\Event\EventBus
+
+    infrastructure.event_provider:
+        class: App\Infrastructure\Bus\Event\EventProvider
+
+    infrastructure.symfony_container:
+        class: App\Infrastructure\Service\Container\Symfony
+        arguments: ["@service_container"]
+
+    infrastructure.inflector_use_case_handler_name:
+        class: App\Infrastructure\Service\Inflector\UseCaseHandlerName

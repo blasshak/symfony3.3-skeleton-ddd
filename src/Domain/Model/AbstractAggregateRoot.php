@@ -4,6 +4,10 @@ namespace App\Domain\Model;
 
 use App\Domain\Bus\Event\DomainEventInterface;
 
+/**
+ * Class AbstractAggregateRoot
+ * @package App\Domain\Model
+ */
 class AbstractAggregateRoot
 {
     /**
@@ -11,22 +15,21 @@ class AbstractAggregateRoot
      */
     private $pendingEvents = [];
 
-    protected function __construct()
-    {
-    }
-
     /**
+     * @access public
      * @param DomainEventInterface $event
+     * @return void
      */
-    public function record(DomainEventInterface $event)
+    public function record(DomainEventInterface $event) : void
     {
         $this->pendingEvents[] = $event;
     }
 
     /**
+     * @access public
      * @return array
      */
-    public function pendingEvents()
+    public function pendingEvents() : array
     {
         $events = $this->pendingEvents;
 
@@ -35,8 +38,11 @@ class AbstractAggregateRoot
         return $events;
     }
 
-
-    private function removeEvents()
+    /**
+     * @access public
+     * @return void
+     */
+    private function removeEvents() : void
     {
         $this->pendingEvents = [];
     }

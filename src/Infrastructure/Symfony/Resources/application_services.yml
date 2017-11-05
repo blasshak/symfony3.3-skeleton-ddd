@@ -1,1 +1,14 @@
 services:
+    application.show_service:
+        class: App\Application\Service\Prueba\ShowService
+        parent: application.abstract_application_service
+
+    application.show_use_case:
+        class: App\Application\Bus\UseCase\Prueba\ShowUseCase
+        arguments: ["@infrastructure.event_provider"]
+
+    application.abstract_application_service:
+        class: App\Application\Service\AbstractApplicationService
+        abstract: true
+        calls:
+            - [setUseCaseBus, ['@infrastructure.use_case_bus_sync']]

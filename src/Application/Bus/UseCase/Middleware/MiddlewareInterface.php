@@ -2,13 +2,19 @@
 
 namespace App\Application\Bus\UseCase\Middleware;
 
+use App\Application\Bus\UseCase\RequestInterface;
+
+/**
+ * Interface MiddlewareInterface
+ * @package App\Application\Bus\UseCase\Middleware
+ */
 interface MiddlewareInterface
 {
     /**
      * @access public
-     * @param array $request
+     * @param RequestInterface $request
      * @param callable $next
      * @return mixed
      */
-    public function execute(array $request, callable $next);
+    public function execute(RequestInterface $request, callable $next);
 }

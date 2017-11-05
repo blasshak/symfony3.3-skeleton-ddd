@@ -7,7 +7,7 @@ use App\Domain\Bus\Event\EventProviderInterface;
 
 /**
  * Class EventBus
- * @package CoreBundle\Infrastructure\Bus\Event
+ * @package App\Infrastructure\Bus\Event
  */
 class EventProvider implements EventProviderInterface
 {
@@ -28,7 +28,7 @@ class EventProvider implements EventProviderInterface
      * @param DomainEventInterface $event
      * @return void
      */
-    public function record(DomainEventInterface $event)
+    public function record(DomainEventInterface $event) : void
     {
         $this->events[$event->name()] = $event;
     }
@@ -37,7 +37,7 @@ class EventProvider implements EventProviderInterface
      * @access public
      * @return DomainEventInterface[] $events
      */
-    public function release()
+    public function release() : array
     {
         $events = $this->events;
         $this->removeEvents();
@@ -48,7 +48,7 @@ class EventProvider implements EventProviderInterface
      * @access private
      * @return void
      */
-    private function removeEvents()
+    private function removeEvents() : void
     {
         $this->events = [];
     }

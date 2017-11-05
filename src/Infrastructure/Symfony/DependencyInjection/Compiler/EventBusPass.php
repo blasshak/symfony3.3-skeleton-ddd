@@ -10,7 +10,7 @@ class EventBusPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $serviceName = 'infrastructure.event_bus_sync';
+        $serviceName = 'infrastructure.event_bus';
         // always first check if the primary service is defined
         if (!$container->has($serviceName)) {
             return;
@@ -22,7 +22,7 @@ class EventBusPass implements CompilerPassInterface
         $taggedServices = $container->findTaggedServiceIds($serviceName);
 
         foreach ($taggedServices as $id => $tags) {
-            $eventName = $taggedServices[$id][0]['event_class_name'];
+            $eventName = $taggedServices[$id][0]['event_name'];
 
             $definition->addMethodCall('addListener', array($eventName, new Reference($id)));
         }

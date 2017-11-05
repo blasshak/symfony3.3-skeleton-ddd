@@ -2,11 +2,20 @@
 
 namespace App\Application\Bus\UseCase\Prueba;
 
+use App\Application\Bus\UseCase\RequestInterface;
 use App\Domain\Bus\Event\EventProviderInterface;
-use App\Domain\Bus\Event\Prueba\UserResgisteredEvent;
+use App\Domain\Bus\Event\Prueba\UserRegisteredEvent;
 
-class ShowUseCase
+/**
+ * Class ShowUseCase
+ * @package App\Application\Bus\UseCase\Prueba
+ */
+final class ShowUseCase
 {
+    /**
+     * @access public
+     * @param EventProviderInterface $eventProvider
+     */
     public function __construct(EventProviderInterface $eventProvider)
     {
         $this->eventProvider = $eventProvider;
@@ -14,12 +23,13 @@ class ShowUseCase
 
     /**
      * @access public
-     * @param array $request
+     * @param RequestInterface $request
      * @return mixed
      */
-    public function execute(array $request)
+    public function execute(RequestInterface $request)
     {
-        $this->eventProvider->record(new UserResgisteredEvent());
+        $text = $request->text();
+        $this->eventProvider->record(new UserRegisteredEvent());
 
         return array();
     }

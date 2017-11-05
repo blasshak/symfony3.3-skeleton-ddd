@@ -8,9 +8,9 @@ use App\Domain\Bus\Event\ListenerInterface;
 
 /**
  * Class EventBus
- * @package CoreBundle\Infrastructure\Bus\Event
+ * @package App\Infrastructure\Bus\Event
  */
-class EventBusSync implements EventBusInterface
+class EventBus implements EventBusInterface
 {
     /**
      * @access private

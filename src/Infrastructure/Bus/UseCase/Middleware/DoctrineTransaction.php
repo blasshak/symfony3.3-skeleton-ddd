@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Bus\UseCase\Middleware;
 
 use App\Application\Bus\UseCase\Middleware\MiddlewareInterface;
+use App\Application\Bus\UseCase\RequestInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
@@ -27,12 +28,12 @@ class DoctrineTransaction implements MiddlewareInterface
 
     /**
      * @access public
-     * @param array $request
+     * @param RequestInterface $request
      * @param callable $next
      * @return mixed
      * @throws \Exception
      */
-    public function execute(array $request, callable $next)
+    public function execute(RequestInterface $request, callable $next)
     {
         $this->entityManager->beginTransaction();
         try {
@@ -49,7 +50,7 @@ class DoctrineTransaction implements MiddlewareInterface
      * @access protected
      * @return void
      */
-    protected function rollbackTransaction()
+    protected function rollbackTransaction() : void
     {
         $this->entityManager->rollback();
         $connection = $this->entityManager->getConnection();

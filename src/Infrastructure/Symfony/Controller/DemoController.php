@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Symfony\Controller;
 
+use App\Application\Service\Prueba\ShowService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
@@ -16,9 +17,10 @@ class DemoController extends Controller
      */
     public function showAction()
     {
-        $eventBus = $this->get('infrastructure.event_bus_sync');
-        var_dump($eventBus);
-        var_dump("ss");
+        /** @var ShowService $showPruebaService */
+        $showService = $this->get('application.show_service');
+        $showService->execute(array('text' => 'pruebaaaaaaaaaaaaaaaaa'));
+        var_dump("exit");
         exit();
     }
 }

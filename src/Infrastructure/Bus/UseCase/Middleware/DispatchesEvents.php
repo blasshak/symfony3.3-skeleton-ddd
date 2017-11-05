@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Bus\UseCase\Middleware;
 
 use App\Application\Bus\UseCase\Middleware\MiddlewareInterface;
+use App\Application\Bus\UseCase\RequestInterface;
 use App\Domain\Bus\Event\EventBusInterface;
 use App\Domain\Bus\Event\EventProviderInterface;
 
@@ -35,18 +36,18 @@ class DispatchesEvents implements MiddlewareInterface
 
     /**
      * @access public
-     * @param array $request
+     * @param RequestInterface $request
      * @param callable $next
      * @return mixed
      * @throws \Exception
      */
-    public function execute(array $request, callable $next)
+    public function execute(RequestInterface $request, callable $next)
     {
         try {
             $returnValue = $next($request);
             $events = $this->eventProvider->release();
             foreach ($events as $event) {
-                $this->eventBus->handle($event);
+                $this->eventBus->dispatch($event);
             }
         } catch (\Exception $e) {
             throw $e;

@@ -5,10 +5,19 @@ namespace App\Domain\Bus\Event\Prueba;
 use App\Domain\Bus\Event\DomainEventInterface;
 use App\Domain\Bus\Event\ListenerInterface;
 
+/**
+ * Class SendEmailListener
+ * @package App\Domain\Bus\Event\Prueba
+ */
 class SendEmailListener implements ListenerInterface
 {
-    public function handle(DomainEventInterface $event)
+    /**
+     * @access public
+     * @param DomainEventInterface $event
+     * @return void
+     */
+    public function handle(DomainEventInterface $event) : void
     {
-        var_dump('prueba');
+        var_dump('Listener SendEmailListener');
     }
 }
